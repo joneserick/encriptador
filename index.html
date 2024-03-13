@@ -6,30 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encriptador de Texto</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="./styles/style.css"> -->
+    <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
     <header>
-        <img class="logoAlura" src="./assets/logoalura.png" alt="logo da alura">
+        <img class="logoAlura" src="assets/logoalura.png" alt="logo da alura">
     </header>
     
     <main>
-        <section>
+        <section>            
             <textarea class="text-area" cols="41" rows="4" placeholder="Digite seu texto"></textarea>
+            <p class="salocin">Caractere inválido!</p>
             <div class="informacao">
-                <h6>Apenas letras minúsculas e sem acentuação.</h6>
+                <img src="assets/bi_exclamation-circle-fill.svg" alt="">
+                <p>Apenas letras minúsculas e sem acentuação.</p>
             </div>
             <div class="botoes">
                 <button class="btn-encriptar" onclick="criptografarTexto()">Criptografar</button>
                 <button class="btn-desencriptar" onclick="descriptografarTexto()">Descriptografar</button>
-                <button class="btn-limpar" onclick="limparCampos()">Limpar</button>
+                <!-- <button class="btn-limpar" onclick="limparCampos()">Limpar</button> -->
             </div>
         </section>
         <section>
-            <textarea class="mensagem" cols="20" rows="10"></textarea>
-            <button class="btn-copiar">Copiar</button>
+            <div class="output">
+                <textarea class="mensagem" cols="20" rows="10" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$])[a-zA-Z0-9@#$]{8,50}$" required></textarea>
+                <div class="start-box" style="display:none;">
+                    <img class="img-placeholder" src="assets/imagemboneco.png">
+                    <p class="titulo">Nenhuma mensagem encontrada</p>
+                    <p class="descricao">Digite um texto que você deseja criptografar ou descriptografar.</p>
+                </div>
+                <button class="btn-copiar" hidden>Copiar</button>
+            </div>
         </section>
     </main>
     <script src="encriptador.js"></script>
 </body>
 </html>
+
+<!-- 
+    ajustar tamanho do text area - OK
+    ajustar imagem, mensagem e descrição - OK
+    ajustar mensagem de regras 
+    ajustar botoes (tamanho, fonte) - 
+    exibir/esconder botao copiar
+-->

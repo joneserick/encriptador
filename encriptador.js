@@ -30,10 +30,20 @@ function limparCampos() {
 }
 
 function criptografarTexto() {
+    if(verificarCaracteresEspeciais()) {
+        let textArea = document.querySelector(".text-area")
+        let mensagemDeErro = document.querySelector(".salocin");
+
+        mensagemDeErro.style.display = 'block';
+        return;
+    }
+
     var campoDeTexto = document.querySelector(".text-area");
     var campoMensagem = document.querySelector(".mensagem");
+    document.querySelector(".salocin").style.visibility = 'none';
 
-    var textoInformadoPeloUsuario = campoDeTexto.value; 
+
+    var textoInformadoPeloUsuario = campoDeTexto.value.toLowerCase(); 
     var textoCriptografado = "";
 
     for(let indice = 0; indice < textoInformadoPeloUsuario.length; indice++) {
@@ -61,6 +71,22 @@ function descriptografarTexto() {
        }
     }
     campoMensagem.value = textoDescriptografado;
+}
+
+function verificarCaracteresEspeciais() {
+    const campoDeTexto = document.querySelector('.text-area').value;
+    var padrao = '^[a-z ]*$';
+    let contem = false;
+
+    for(let indice = 0; indice < campoDeTexto.length; indice++) {
+        if(!campoDeTexto[indice].match(padrao)) {
+            contem = true;
+            console.log(campoDeTexto[indice]);
+            break;
+        }
+    }
+
+    return contem;
 }
 
 // newCript();
