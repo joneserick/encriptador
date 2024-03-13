@@ -16,6 +16,14 @@ const listaCaracteres = [
     ['u', 'ufat']
 ];
 
+const listaVogais = [
+    'a',
+    'e',
+    'i',
+    'o',
+    'u',
+]
+
 function limparCampos() {
     document.querySelector(".text-area").value = "";
     document.querySelector(".mensagem").value = "";
@@ -28,26 +36,32 @@ function criptografarTexto() {
     var textoInformadoPeloUsuario = campoDeTexto.value; 
     var textoCriptografado = "";
 
-    for(let indice = 0; indice <= listaCaracteres.length - 1; indice++) {
-        if(textoInformadoPeloUsuario.includes(listaCaracteres[indice][0])) {
-            textoCriptografado = textoInformadoPeloUsuario.replaceAll(listaCaracteres[indice][0], listaCaracteres[indice][1]);
+    for(let indice = 0; indice < textoInformadoPeloUsuario.length; indice++) {
+        const caractere = textoInformadoPeloUsuario[indice];
+        const itemCorrespondente = listaCaracteres.find(item => item[0] == caractere);
+
+        if(listaVogais.includes(caractere) && itemCorrespondente) {
+            textoCriptografado += itemCorrespondente[1];
+        } else {
+            textoCriptografado += caractere;
         }
     }
-    
     campoMensagem.value = textoCriptografado;
 }
 
 function descriptografarTexto() {
     var campoDeTexto = document.querySelector(".text-area");
     var campoMensagem = document.querySelector(".mensagem");
-    var textoDescriptografado = "";
+    var textoDescriptografado = campoDeTexto.value;
 
     //identificar os caracteres codificados dentro do texto.
     for(let i = 0; i <= listaCaracteres.length-1; i++) {
-       if(campoDeTexto.value.includes(listaCaracteres[i][1])) {
-            textoDescriptografado = campoDeTexto.value.replaceAll(listaCaracteres[i][1], listaCaracteres[i][0]);
+       if(textoDescriptografado.includes(listaCaracteres[i][1])) {
+            textoDescriptografado = textoDescriptografado.replaceAll(listaCaracteres[i][1], listaCaracteres[i][0]);
        }
     }
     campoMensagem.value = textoDescriptografado;
 }
+
+// newCript();
 
