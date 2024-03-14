@@ -24,16 +24,30 @@ const listaVogais = [
     'u',
 ]
 
+let areaDeTransferencia = "";
+
 function limparCampos() {
-    document.querySelector(".text-area").value = "";
+    document.querySelector(".text-area-principal").value = "";
     document.querySelector(".mensagem").value = "";
 }
 
 function criptografarTexto() {
-    var campoDeTexto = document.querySelector(".text-area");
+    if(verificarCaracteresEspeciais() || document.querySelector(".text-area-principal").value === "") {
+        let errorBox = document.querySelector(".error-box");
+        errorBox.style.display = 'flex';
+        return;
+    }
+
+    document.querySelector(".error-box").style.display = 'none';
+
+    var campoDeTexto = document.querySelector(".text-area-principal");
     var campoMensagem = document.querySelector(".mensagem");
 
-    var textoInformadoPeloUsuario = campoDeTexto.value; 
+    
+    esconderComponentesIniciais();
+    exibirComponentesResposta(campoMensagem);
+
+    var textoInformadoPeloUsuario = campoDeTexto.value.toLowerCase(); 
     var textoCriptografado = "";
 
     for(let indice = 0; indice < textoInformadoPeloUsuario.length; indice++) {
@@ -50,7 +64,7 @@ function criptografarTexto() {
 }
 
 function descriptografarTexto() {
-    var campoDeTexto = document.querySelector(".text-area");
+    var campoDeTexto = document.querySelector(".text-area-principal");
     var campoMensagem = document.querySelector(".mensagem");
     var textoDescriptografado = campoDeTexto.value;
 
@@ -62,6 +76,52 @@ function descriptografarTexto() {
     }
     campoMensagem.value = textoDescriptografado;
 }
+
+function verificarCaracteresEspeciais() {
+    const campoDeTexto = document.querySelector('.text-area-principal').value;
+    var padrao = '^[a-z ]*$';
+    let contem = false;
+
+    for(let indice = 0; indice < campoDeTexto.length; indice++) {
+        if(!campoDeTexto[indice].match(padrao)) {
+            contem = true;
+            console.log(campoDeTexto[indice]);
+            break;
+        }
+    }
+
+    return contem;
+}
+
+function exibirComponentesResposta(campoMensagem) {
+    let botaoCopiar = document.querySelector(".btn-copiar");
+
+    campoMensagem.style.display = 'block';
+    botaoCopiar.style.display = 'block';
+}
+
+function esconderComponentesResposta() {
+    let campoMensagem = document.querySelector(".mensagem");
+    let botaoCopiar = document.querySelector(".btn-copiar");
+
+    campoMensagem.style.display = 'none';
+    botaoCopiar.style.display = 'none';
+}
+
+function esconderComponentesIniciais() {
+    let startBox = document.querySelector(".start-box");
+
+    startBox.style.display = 'none';
+}
+
+function copiarTexto() {
+    let campoMensagem = document.querySelector(".mensagem");
+
+    navigator.clipboard.writeText(campoMensagem.value).then(function() {
+        alert('Texto copiado para a área de transferência!');
+    });
+}
+   
 
 // newCript();
 
